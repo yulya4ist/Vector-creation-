@@ -18,6 +18,10 @@ namespace mcv// My Class Vector
 	class Vector
 	{
 	public:
+
+		class Iterator;
+		Iterator begin() { return data; }
+		Iterator end() { return (data + size ); }
 		//Конструкторы:
 		Vector();
 		Vector(size_t size);
@@ -39,6 +43,26 @@ namespace mcv// My Class Vector
 		Vector<T> operator-(Vector<T> other) const;
 		//Деструктор:
 		~Vector();
+
+		class Iterator
+		{
+			T* cur;
+		public:
+			Iterator(T* first) : cur(first) {}
+
+			T& operator+ (int n) { return *(cur + n); }
+			T& operator- (int n) { return *(cur - n); }
+
+			T& operator++ (int) { return *(cur ++ ); };
+			T& operator-- (int) { return *(cur--); };
+			T& operator++ () { return *(++cur); };
+			T& operator-- () { return *(--cur); };
+
+			bool operator!= (const Iterator& it) { return cur != it.cur; }
+			bool operator== (const Iterator& it) { return cur == it.cur; }
+
+			T& operator* () { return *cur; }
+		};
 	private:
 		T* data;
 		size_t size;

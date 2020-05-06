@@ -29,6 +29,14 @@ int main()
 		std::cout << vec[i] << "\t";
 	}
 
+	std::cout << '\n';
 
+	mcv::Vector<double>::Iterator it = vec.begin();
+	//std::cout << * (it);
+	while (it != vec.end())
+	{
+		std::cout << *(it)*0.5 << "\t";
+		it++;
+	}
 
 }
