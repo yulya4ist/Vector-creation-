@@ -7,7 +7,7 @@
 
 int main()
 {
-    mcv::Vector<double> vec(10,0);
+    mcv:: Vector<double> vec(10,0);
 	for (size_t i = 0; i < vec.Size(); i++)
 	{
 		vec.At(i) = i;
@@ -30,6 +30,8 @@ int main()
 	}
 
 	std::cout << '\n';
+
+	vec.At(3) = 5;
 
 	mcv::Vector<double>::Iterator it = vec.begin();
 	//std::cout << * (it);

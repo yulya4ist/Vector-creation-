@@ -30,17 +30,23 @@ namespace mcv// My Class Vector
 		Vector(Vector<T>&& other);
 		//Методы:
 		T& At(size_t index);
+		const T& At(size_t index) const;
 		size_t Size() const { return this->size; }
 		size_t Capacity() const { return this->capacity; }
 		//Операторы: 
 		Vector<T>& operator=(const Vector<T>& other);
 		Vector<T>& operator=(Vector<T>&& other);
+
 		T& operator[](size_t index);
+		const T& operator[](size_t index) const; 
 	    Vector<T> operator+() const;
 		Vector<T> operator-() const;
 		Vector<T> operator*(T value) const;
-		Vector<T> operator+(Vector<T> other) const;
-		Vector<T> operator-(Vector<T> other) const;
+		Vector<T> operator+(const Vector<T> & other);
+		Vector<T> operator-(const Vector<T>& other);
+
+		Vector<T> operator+(Vector<T>&& other);
+		Vector<T> operator-(Vector<T>&& other);
 		//Деструктор:
 		~Vector();
 
@@ -121,6 +127,14 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
+	const T& Vector<T>::At(size_t index) const
+	{
+		if (index > this->size)
+			throw vector_exception("invalid vector subscript");
+		return this->data[index];
+	}
+
+	template<typename T>
     Vector<T>& Vector<T>::operator=(const Vector<T>& other)
 	{
 		if (this == &other)
@@ -168,6 +182,16 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
+	const T& Vector<T>::operator[](size_t index) const
+	{
+		if (index > this->size)
+			throw vector_exception("invalid vector subscript");
+		return this->data[index];
+	}
+
+	
+
+	template<typename T>
 	Vector<T> Vector<T>::operator+() const
 	{
 		return *this;
@@ -196,31 +220,57 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
-	Vector<T> Vector<T>::operator+(Vector<T> other) const
+	Vector<T> Vector<T>::operator+(const Vector<T>& other)
 	{
 		if (this->size != other.size)
 			throw vector_exception("vectors of different sizes");
-		Vector<T> buf = *this;
 		
-		for (size_t i = 0; i < buf.size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
-			buf[i] += other[i];
+			this->data[i] += other[i];
 		}
-		return buf;
+		return *this;
 	}
 
 	template<typename T>
-	Vector<T> Vector<T>::operator-(Vector<T> other) const
+	Vector<T> Vector<T>::operator-(const Vector<T>& other)
 	{
 		if (this->size != other.size)
 			throw vector_exception("vectors of different sizes");
-		Vector<T> buf = *this;
+		//Vector<T> buf = *this;
 
-		for (size_t i = 0; i < buf.size; i++)
+		for (size_t i = 0; i < this->size; i++)
 		{
-			buf[i] -= other[i];
+			this->data[i] -= other[i];
 		}
-		return buf;
+		return *this;
+	}
+
+	template<typename T>
+	Vector<T> Vector<T>::operator+(Vector<T>&& other)
+	{
+		if (this->size != other.size)
+			throw vector_exception("vectors of different sizes");
+		
+		for (size_t i = 0; i < this->size; i++)
+		{
+			this->data[i] += other[i];
+		}
+		return *this;
+	}
+
+	template<typename T>
+	Vector<T> Vector<T>::operator-(Vector<T>&& other)
+	{
+		if (this->size != other.size)
+			throw vector_exception("vectors of different sizes");
+		//Vector<T> buf = *this;
+
+		for (size_t i = 0; i < this->size; i++)
+		{
+			this->data[i] -= other[i];
+		}
+		return *this;
 	}
 
 	template<typename T>
