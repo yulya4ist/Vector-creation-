@@ -37,16 +37,16 @@ namespace mcv// My Class Vector
 		Vector<T>& operator=(const Vector<T>& other);
 		Vector<T>& operator=(Vector<T>&& other);
 
-		T& operator[](size_t index);
-		const T& operator[](size_t index) const; 
+		T& operator[](size_t index) noexcept;
+		const T& operator[](size_t index) const noexcept;
 	    Vector<T> operator+() const;
 		Vector<T> operator-() const;
 		Vector<T> operator*(T value) const;
-		Vector<T> operator+(const Vector<T> & other);
-		Vector<T> operator-(const Vector<T>& other);
+		const Vector<T> operator+(const Vector<T> & other);
+		const Vector<T> operator-(const Vector<T>& other);
+		//const Vector<T> operator+( Vector<T>&& other);
+		//const Vector<T> operator-(Vector<T>&& other);
 
-		Vector<T> operator+(Vector<T>&& other);
-		Vector<T> operator-(Vector<T>&& other);
 		//Деструктор:
 		~Vector();
 
@@ -174,22 +174,17 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
-	T& Vector<T>::operator[](size_t index)
+	T& Vector<T>::operator[](size_t index) noexcept
 	{
-		if (index > this->size)
-			throw vector_exception("invalid vector subscript");
 		return this->data[index];
 	}
 
 	template<typename T>
-	const T& Vector<T>::operator[](size_t index) const
+	const T& Vector<T>::operator[](size_t index) const noexcept
 	{
-		if (index > this->size)
-			throw vector_exception("invalid vector subscript");
 		return this->data[index];
 	}
 
-	
 
 	template<typename T>
 	Vector<T> Vector<T>::operator+() const
@@ -220,7 +215,7 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
-	Vector<T> Vector<T>::operator+(const Vector<T>& other)
+	const Vector<T> Vector<T>::operator+(const Vector<T>& other)
 	{
 		if (this->size != other.size)
 			throw vector_exception("vectors of different sizes");
@@ -233,7 +228,7 @@ namespace mcv// My Class Vector
 	}
 
 	template<typename T>
-	Vector<T> Vector<T>::operator-(const Vector<T>& other)
+	const Vector<T> Vector<T>::operator-(const Vector<T>& other)
 	{
 		if (this->size != other.size)
 			throw vector_exception("vectors of different sizes");
@@ -246,7 +241,7 @@ namespace mcv// My Class Vector
 		return *this;
 	}
 
-	template<typename T>
+	/*template<typename T>
 	Vector<T> Vector<T>::operator+(Vector<T>&& other)
 	{
 		if (this->size != other.size)
@@ -264,14 +259,15 @@ namespace mcv// My Class Vector
 	{
 		if (this->size != other.size)
 			throw vector_exception("vectors of different sizes");
-		//Vector<T> buf = *this;
+
+		Vector<T> buf = *this;
 
 		for (size_t i = 0; i < this->size; i++)
 		{
 			this->data[i] -= other[i];
 		}
 		return *this;
-	}
+	}*/
 
 	template<typename T>
 	Vector<T>::~Vector()

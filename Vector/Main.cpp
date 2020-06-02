@@ -24,6 +24,8 @@ int main()
 
 	vec = vec - 2.*vec;
 
+	vec = vec + mcv::Vector<double>{10, 5.};
+
 	for (size_t i = 0; i < vec.Size(); i++)
 	{
 		std::cout << vec[i] << "\t";
