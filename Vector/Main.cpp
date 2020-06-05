@@ -43,4 +43,14 @@ int main()
 		it++;
 	}
 
+	vec.print();
+	//vec.clear();
+
+	std::cout << std::endl;
+
+	mcv::linear_generator_t linear_generator(2.5, 3);
+
+	vec.fill(vec.begin(), vec.end(), linear_generator);
+	vec.print();
+	
 }
